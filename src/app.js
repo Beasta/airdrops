@@ -4,7 +4,7 @@ const fs = require('fs');
 const droppings = require('./drop.js');
 
 const readFromFile = process.argv[2] === 'true'; // if false, it'll create the file and stop. if true, it'll run using the existing file
-const testRPC = process.argv[3] === 'true';
+const notATest = process.argv[3] === 'true';
 
 // Web3 Js
 const Tx = require('ethereumjs-tx');
@@ -14,7 +14,7 @@ if (typeof web3 !== 'undefined') {
     web3 = new Web3(web3.currentProvider)
 } else {
     // eth network to send on (currently ropsten testnet)
-    web3 = new Web3(new Web3.providers.HttpProvider(`http://localhost:${testRPC ? 8546 : 8545}`))
+    web3 = new Web3(new Web3.providers.HttpProvider(`http://localhost:${notATest ? 8545 : 8546}`))
 };
 const defaultAccount = web3.eth.defaultAccount = web3.eth.accounts[0];
 console.log('defaultAccount',defaultAccount);
@@ -26,7 +26,7 @@ const thisAirdropTotal = 3000000000000000000000; // amount of tokens allocated f
 
 // keys
 const keys = require('./keys.js');
-const privateKey = new Buffer(keys.privateKey, 'hex');
+const privateKey = new Buffer(notATest ? keys.privateKey : keys.testPrivateKey, 'hex');
 // Airdrop
 const etherscanApiUrl = 'https://api.etherscan.io/api'
 const ethereumDivider = 1000000000000000000;

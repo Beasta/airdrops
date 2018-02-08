@@ -4,7 +4,8 @@
   "description": "divi airdrops",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo 'starting ganache test rpc' && ganache-cli --fork http://localhost:8545/ --port 8546 --account=\"0xe84f3375c0033f91706d34f1ad834c7692e433095e17784a87e6a1db4560c6a0,10\"",
+    "drop": "node ./app.js"
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,3 @@
-// const request = require("request-promise")
 const _ = require("lodash");
 const keys = require('./keys.js');
 const Web3 = require('web3');
@@ -7,9 +6,9 @@ const runAirDrop = require('./app.js');
 const fs = require('fs');
 
 const readFromFile = process.argv[2] === 'true';
-const testRpc = process.argv[3] === 'true';
+const notATest = process.argv[3] === 'true';
 
-console.log('readFromFile',readFromFile);
+console.log('readFromFile',readFromFile, readFromFile ? 'doing the drop' : 'creating drop files');
 
 const etherscanApiUrl = 'https://api.etherscan.io/api'
 const contractAddress = '0x13f11c9905a08ca76e3e853be63d4f0944326c72';
@@ -29,7 +28,7 @@ if (typeof web3 !== 'undefined') {
   web3 = new Web3(web3.currentProvider)
 } else {
   // eth network to send on (currently ropsten testnet)
-  web3 = new Web3(new Web3.providers.HttpProvider(`http://localhost:${testRpc ? 8546 : 8545}`))
+  web3 = new Web3(new Web3.providers.HttpProvider(`http://localhost:${notATest ? 8545 : 8546}`))
 };
 web3.utils = utils;
 

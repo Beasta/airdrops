@@ -11,12 +11,12 @@
 //   }
 // ]
 // const
-//     web3 = new Web3(new Web3.providers.HttpProvider(`http://localhost:${testRPC ? 8546 : 8545}`))
+//     web3 = new Web3(new Web3.providers.HttpProvider(`http://localhost:${notATest ? 8545 : 8546}`))
 
 const Web3 = require('web3');
 const Tx = require('ethereumjs-tx');
-const testRPC = process.argv[3] === 'true';
-const web3 = new Web3(new Web3.providers.HttpProvider(`http://localhost:${testRPC ? 8546 : 8545}`))
+const notATest = process.argv[3] === 'true';
+const web3 = new Web3(new Web3.providers.HttpProvider(`http://localhost:${notATest ? 8545 : 8546}`))
 const defaultAccount = web3.eth.defaultAccount = web3.eth.accounts[0];
 console.log('defaultAccount',defaultAccount);
 
@@ -25,7 +25,7 @@ const contractAddress = '0x13f11C9905A08ca76e3e853bE63D4f0944326C72'; // officia
 const contract = web3.eth.contract(abiArray).at(contractAddress);
 
 const keys = require('./keys.js');
-const privateKey = new Buffer(keys.privateKey, 'hex');
+const privateKey = new Buffer(notATest ? keys.privateKey : keys.testPrivateKey, 'hex');
 
 const droppings = (tokenAddressesAndQuantities) => {
   let nonceCount = web3.eth.getTransactionCount(defaultAccount);
